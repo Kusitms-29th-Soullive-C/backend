@@ -72,6 +72,6 @@ jobs:
           key: ${{ secrets.AWS_KEY }}
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}
-            chmod 777 ./deploy.sh
-            ./deploy.sh
+            sudo docker rm -f $(docker ps -qa) #
+            docker compose up -d
             docker image prune -f
