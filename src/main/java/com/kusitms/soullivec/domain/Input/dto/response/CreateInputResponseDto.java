@@ -23,6 +23,8 @@ public class CreateInputResponseDto {
 
     private Gender gender;
 
+    private String age;
+
     public static CreateInputResponseDto of(Input input) {
         return CreateInputResponseDto.builder()
                 .id(input.getId())
@@ -30,6 +32,7 @@ public class CreateInputResponseDto {
                 .brand(input.getBrand())
                 .product(input.getProduct())
                 .gender(input.getGender())
+                .age(input.getAge())
                 .build();
     }
 }

@@ -1,9 +1,7 @@
 package com.kusitms.soullivec.domain.Bookmark.entity;
 
 import com.kusitms.soullivec.domain.Output.entity.Output;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -15,7 +13,11 @@ public class Bookmark {
 
     @Id
     @Column(name = "bookmark_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //private Output outputId;
+    @ManyToOne
+    @JoinColumn(name = "output_id")
+    private Output output;
+
 }

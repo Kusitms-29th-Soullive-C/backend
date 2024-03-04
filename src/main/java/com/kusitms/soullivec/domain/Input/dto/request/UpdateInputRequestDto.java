@@ -4,7 +4,7 @@ import com.kusitms.soullivec.domain.Input.entity.Gender;
 import lombok.Getter;
 
 @Getter
-public class CreateInputRequestDto {
+public class UpdateInputRequestDto {
 
     private String companyName;
 
