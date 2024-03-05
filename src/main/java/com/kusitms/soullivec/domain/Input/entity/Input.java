@@ -1,5 +1,7 @@
 package com.kusitms.soullivec.domain.Input.entity;
 
+import com.kusitms.soullivec.domain.Input.dto.request.CreateInputRequestDto;
+import com.kusitms.soullivec.domain.Input.dto.request.UpdateInputRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +30,25 @@ public class Input {
     @Column(name="gender")
     private Gender gender;
 
+    @Column(name = "age")
+    private String age;
 
+    //age에 대한 수정 필요
+    public void update(UpdateInputRequestDto updateInputRequestDto) {
+        this.companyName = updateInputRequestDto.getCompanyName();
+        this.brand = updateInputRequestDto.getBrand();
+        this.product = updateInputRequestDto.getProduct();
+        this.gender = updateInputRequestDto.getGender();
+        this.age= updateInputRequestDto.getAge();
+    }
+
+    public static Input createInput(CreateInputRequestDto inputRequestDto) {
+        return Input.builder()
+                .companyName(inputRequestDto.getCompanyName())
+                .brand(inputRequestDto.getBrand())
+                .product(inputRequestDto.getProduct())
+                .gender(inputRequestDto.getGender())
+                .age(inputRequestDto.getAge())
+                .build();
+    }
 }
