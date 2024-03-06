@@ -26,7 +26,7 @@ public class ModelService {
     }
 
     //model 반환
-    private Model findModelById(Long modelId) {
+    public Model findModelById(Long modelId) {
         return modelRepository.findById(modelId)
                 .orElseThrow(() -> new ApplicationException(ErrorCode.ENTITY_NOT_FOUND));
     }
