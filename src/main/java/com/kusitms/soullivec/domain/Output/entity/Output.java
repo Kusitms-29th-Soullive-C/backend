@@ -39,6 +39,6 @@ public class Output {
 
     @ManyToOne
     @JoinColumn(name = "model_id")
-    private Model modelId;
+    private Model model;
 
 }

@@ -1,10 +1,10 @@
-package com.kusitms.soullivec.domain.Character.service;
+package com.kusitms.soullivec.domain.Mood.service;
 
 import com.kusitms.soullivec.common.error.ApplicationException;
 import com.kusitms.soullivec.common.error.ErrorCode;
-import com.kusitms.soullivec.domain.Character.dto.response.MoodResponseDto;
-import com.kusitms.soullivec.domain.Character.entity.Mood;
-import com.kusitms.soullivec.domain.Character.repository.MoodRepository;
+import com.kusitms.soullivec.domain.Mood.dto.response.MoodResponseDto;
+import com.kusitms.soullivec.domain.Mood.entity.Mood;
+import com.kusitms.soullivec.domain.Mood.repository.MoodRepository;
 import com.kusitms.soullivec.domain.Model.entity.Model;
 import com.kusitms.soullivec.domain.Model.service.ModelService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class MoodService {
 
     //mood dto List
     public List<MoodResponseDto> getMoodResponseList(Long modelId) {
-        List<Mood> moodList = findAllMoodById(modelId);
+        List<Mood> moodList = findAllMoodByModelId(modelId);
         return moodList.stream()
                 .map(MoodResponseDto::of)
                 .collect(Collectors.toList());
@@ -32,20 +32,20 @@ public class MoodService {
 
     //mood dto화
     public MoodResponseDto getMoodResponse(Long modelId) {
-        Mood mood = findMoodById(modelId);
+        Mood mood = findMoodByModelId(modelId);
         return MoodResponseDto.of(mood);
     }
 
     //mood 반환
-    private Mood findMoodById(Long modelId) {
+    private Mood findMoodByModelId(Long modelId) {
         Model model = modelService.findModelById(modelId);
-        return (Mood) moodRepository.findMoodByModelId(model)
+        return (Mood) moodRepository.findMoodByModel(model)
                 .orElseThrow(() -> new ApplicationException(ErrorCode.ENTITY_NOT_FOUND));
     }
 
     //moodList 반환
-    private List<Mood> findAllMoodById(Long modelId) {
+    private List<Mood> findAllMoodByModelId(Long modelId) {
         Model model = modelService.findModelById(modelId);
-        return moodRepository.findAllByModelId(model);
+        return moodRepository.findAllByModel(model);
     }
 }
