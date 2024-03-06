@@ -23,7 +23,7 @@ public class ModelController {
     @GetMapping("/{modelId}")
     public ResponseEntity<SuccessResponse<ModelResponseDto>> getModelResponse(@PathVariable Long modelId) {
         ModelResponseDto response = modelService.getModelResponse(modelId);
-        return SuccessResponse.of(SuccessCode.CREATED, response);
+        return SuccessResponse.of(SuccessCode.OK,response);
     }
 
 }

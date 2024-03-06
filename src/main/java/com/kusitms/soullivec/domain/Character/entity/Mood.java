@@ -9,18 +9,19 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Entity
-public class Character {
+public class Mood {
 
     @Id
-    @Column(name = "character_id")
+    @Column(name = "mood_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long characterId;
+    private Long moodId;
 
     @Column(name = "content")
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "model_id")
-    private Model model;
+    private Model modelId;
+
 
 }

@@ -1,6 +1,5 @@
 package com.kusitms.soullivec.domain.Character.dto.response;
 
-import com.kusitms.soullivec.domain.Character.entity.Character;
 import com.kusitms.soullivec.domain.Model.entity.Model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,17 +10,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateCharacterResponseDto {
+public class CreateMoodrResponseDto {
 
     private Long characterId;
 
     private String content;
 
-    private Model model;
+    private Model modelId;
 
-    public static CreateCharacterResponseDto of(Character character) {
-        return CreateCharacterResponseDto.builder()
-
-                .build();
-    }
 }
