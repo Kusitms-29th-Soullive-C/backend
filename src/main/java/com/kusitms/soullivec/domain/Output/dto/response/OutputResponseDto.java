@@ -1,20 +1,14 @@
 package com.kusitms.soullivec.domain.Output.dto.response;
 
 import com.kusitms.soullivec.domain.Output.entity.Output;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class CreateOutputResponseDto {
+public class OutputResponseDto {
 
     private Long outputId;
-
-    private String modelName;
 
     private int ranking;
 
@@ -28,8 +22,8 @@ public class CreateOutputResponseDto {
 
     private String strategy;
 
-    public static CreateOutputResponseDto of(Output output) {
-        return CreateOutputResponseDto.builder()
+    public static OutputResponseDto of(Output output) {
+        return OutputResponseDto.builder()
                 .outputId(output.getOutputId())
                 .ranking(output.getRanking())
                 .fitness(output.getFitness())

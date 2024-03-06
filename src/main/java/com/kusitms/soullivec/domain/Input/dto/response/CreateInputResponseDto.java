@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateInputResponseDto {
 
-    private Long id;
+    private Long inputId;
 
     private String companyName;
 
@@ -27,7 +27,7 @@ public class CreateInputResponseDto {
 
     public static CreateInputResponseDto of(Input input) {
         return CreateInputResponseDto.builder()
-                .id(input.getId())
+                .inputId(input.getInputId())
                 .companyName(input.getCompanyName())
                 .brand(input.getBrand())
                 .product(input.getProduct())

@@ -15,7 +15,7 @@ public class Input {
     @Id
     @Column(name = "input_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long inputId;
 
     @Column(name = "company_name")
     private String companyName;

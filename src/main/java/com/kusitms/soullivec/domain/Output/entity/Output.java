@@ -14,16 +14,16 @@ public class Output {
     @Id
     @Column(name = "output_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long outputId;
 
-    @Column(name = "model_name")
-    private String modelName;
+    @Column(name = "ranking")
+    private int ranking;
 
     @Column(name = "fitness")
     private int fitness;
 
     @Column(name = "issue")
-    private String issue;
+    private int issue;
 
     @Column(name = "negativity")
     private String negativity;
@@ -34,7 +34,10 @@ public class Output {
     @Column(name = "strategy")
     private String strategy;
 
-    @OneToOne
+    @Column(name = "input_id")
+    private Long inputId;
+
+    @ManyToOne
     @JoinColumn(name = "model_id")
     private Model modelId;
 

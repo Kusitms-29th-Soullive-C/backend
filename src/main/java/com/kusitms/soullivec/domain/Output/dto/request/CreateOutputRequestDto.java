@@ -4,5 +4,19 @@ import lombok.Getter;
 
 @Getter
 public class CreateOutputRequestDto {
-    private String text;
+
+    private Long outputId;
+
+    private int rank;
+
+    private int fitness;
+
+    private int issue;
+
+    private String negativity;
+
+    private String image;
+
+    private String strategy;
+
 }

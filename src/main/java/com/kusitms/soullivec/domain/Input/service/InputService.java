@@ -28,7 +28,7 @@ public class InputService {
     //input 수정 dto화
     public UpdateInputResponseDto updateInputDto(Long inputId, UpdateInputRequestDto updateInputRequestDto) {
         Input input = updateInput(inputId, updateInputRequestDto);
-        return new UpdateInputResponseDto(input);
+        return UpdateInputResponseDto.of(input);
     }
 
     //input 생성

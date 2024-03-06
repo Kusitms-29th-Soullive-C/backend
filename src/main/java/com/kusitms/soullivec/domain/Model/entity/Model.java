@@ -14,12 +14,18 @@ public class Model {
     @Id
     @Column(name = "model_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long modelId;
 
     @Column(name = "model_name")
     private String modelName;
 
-    @ManyToOne
+    @Column(name = "job")
+    private String job;
+
+    @Column(name = "input_id")
+    private Long inputId;
+
+    /*@ManyToOne
     @JoinColumn(name = "input_id")
-    private Input inputId;
+    private Input inputId;*/
 }
