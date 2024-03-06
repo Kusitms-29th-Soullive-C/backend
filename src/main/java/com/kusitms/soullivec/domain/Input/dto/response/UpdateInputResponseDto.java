@@ -2,12 +2,14 @@ package com.kusitms.soullivec.domain.Input.dto.response;
 
 import com.kusitms.soullivec.domain.Input.entity.Gender;
 import com.kusitms.soullivec.domain.Input.entity.Input;
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @Getter
 public class UpdateInputResponseDto {
 
-    private Long id;
+    private Long inputId;
 
     private String companyName;
 
@@ -19,12 +21,14 @@ public class UpdateInputResponseDto {
 
     private String age;
 
-    public UpdateInputResponseDto(Input input) {
-        this.id = input.getId();
-        this.companyName = input.getCompanyName();
-        this.brand = input.getBrand();
-        this.product = input.getProduct();
-        this.gender = input.getGender();
-        this.age = input.getAge();
+    public static UpdateInputResponseDto of(Input input) {
+        return UpdateInputResponseDto.builder()
+                .inputId(input.getInputId())
+                .companyName(input.getCompanyName())
+                .brand(input.getBrand())
+                .product(input.getProduct())
+                .gender(input.getGender())
+                .age(input.getAge())
+                .build();
     }
 }
