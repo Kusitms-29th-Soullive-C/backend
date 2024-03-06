@@ -19,6 +19,16 @@ public class ModelService {
 
     private final ModelRepository modelRepository;
 
+    //model dto화
+    public ModelResponseDto getModelResponse(Long modelId) {
+        Model model = findModelById(modelId);
+        return ModelResponseDto.of(model);
+    }
 
+    //model 반환
+    private Model findModelById(Long modelId) {
+        return modelRepository.findById(modelId)
+                .orElseThrow(() -> new ApplicationException(ErrorCode.ENTITY_NOT_FOUND));
+    }
 
 }
