@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-//@Getter
+@Getter
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 //@AllArgsConstructor
 @Entity
@@ -16,7 +16,7 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     @Column(name = "email",nullable = false)
     private String email;

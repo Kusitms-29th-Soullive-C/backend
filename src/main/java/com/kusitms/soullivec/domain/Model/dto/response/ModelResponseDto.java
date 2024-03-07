@@ -21,7 +21,7 @@ public class ModelResponseDto {
                 .modelId(model.getModelId())
                 .modelName(model.getModelName())
                 .job(model.getJob())
-                .inputId(model.getInput())
+                .inputId(model.getInput().getInputId())
                 .build();
     }
 }

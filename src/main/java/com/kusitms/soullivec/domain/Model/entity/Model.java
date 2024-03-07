@@ -1,8 +1,12 @@
 package com.kusitms.soullivec.domain.Model.entity;
 
 import com.kusitms.soullivec.domain.Input.entity.Input;
+import com.kusitms.soullivec.domain.Mood.entity.Mood;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -22,10 +26,11 @@ public class Model {
     @Column(name = "job")
     private String job;
 
-    @Column(name = "input_id")
-    private Long input;
-
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "input_id")
-    private Input inputId;*/
+    private Input input;
+
+    @OneToMany(mappedBy = "model")
+    private List<Mood> mood = new ArrayList<>();
+
 }

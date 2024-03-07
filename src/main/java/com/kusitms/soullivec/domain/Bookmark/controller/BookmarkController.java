@@ -25,7 +25,6 @@ public class BookmarkController {
     public ResponseEntity<SuccessResponse<List<BookmarkResponseDto>>> getAllBookmarkResponse(@PathVariable Long userId) {
         List<BookmarkResponseDto> response = bookmarkService.getBookmarkResponseLIst(userId);
         return SuccessResponse.of(SuccessCode.OK, response);
-
     }
 
 }
