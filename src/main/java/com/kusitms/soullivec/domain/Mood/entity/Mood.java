@@ -1,4 +1,4 @@
-package com.kusitms.soullivec.domain.Character.entity;
+package com.kusitms.soullivec.domain.Mood.entity;
 
 import com.kusitms.soullivec.domain.Model.entity.Model;
 import jakarta.persistence.*;
@@ -21,7 +21,6 @@ public class Mood {
 
     @ManyToOne
     @JoinColumn(name = "model_id")
-    private Model modelId;
-
+    private Model model;
 
 }

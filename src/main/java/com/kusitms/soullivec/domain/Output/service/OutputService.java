@@ -50,6 +50,12 @@ public class OutputService {
         return OutputSummaryResponseDto.of(output);
     }
 
+    //output 반환
+    private Output findOutputById(Long outputId) {
+        return outputRepository.findById(outputId)
+                .orElseThrow(() -> new ApplicationException(ErrorCode.ENTITY_NOT_FOUND));
+    }
+
     //input과 model에 대한 적합도 검사 후 output 반환
     private Output findOutputByInputId(Long inputId) {
         return (Output) outputRepository.findOutputByInputId(inputId)

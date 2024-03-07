@@ -23,7 +23,7 @@ public class Model {
     private String job;
 
     @Column(name = "input_id")
-    private Long inputId;
+    private Long input;
 
     /*@ManyToOne
     @JoinColumn(name = "input_id")

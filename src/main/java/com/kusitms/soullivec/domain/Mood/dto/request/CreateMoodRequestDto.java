@@ -1,4 +1,4 @@
-package com.kusitms.soullivec.domain.Character.dto.request;
+package com.kusitms.soullivec.domain.Mood.dto.request;
 
 import com.kusitms.soullivec.domain.Model.entity.Model;
 import lombok.Getter;
