@@ -38,7 +38,13 @@ public class OutputService {
                 .collect(Collectors.toList());
     }
 
-    //output dto화
+    //output id에 대한 output dto화
+    public OutputResponseDto getOutputResponseDto(Long outputId) {
+        Output output = findOutputById(outputId);
+        return OutputResponseDto.of(output);
+    }
+
+    //input id에 대한 output dto화
     public OutputResponseDto createOutputResponseDto(Long inputId) {
         Output output = findOutputByInputId(inputId);
         return OutputResponseDto.of(output);

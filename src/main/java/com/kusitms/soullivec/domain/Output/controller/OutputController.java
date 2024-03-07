@@ -18,9 +18,16 @@ public class OutputController {
 
     private final OutputService outputService;
 
+    //output id로 output 반환
+    @GetMapping("/{outputId}")
+    public ResponseEntity<SuccessResponse<OutputResponseDto>> getOutputResponseByOutput(@PathVariable Long outputId) {
+        OutputResponseDto response = outputService.getOutputResponseDto(outputId);
+        return SuccessResponse.of(SuccessCode.OK, response);
+    }
+
     //적합도 검사를 마친 output 반환
-    @GetMapping("/{inputId}")
-    public ResponseEntity<SuccessResponse<List<OutputResponseDto>>> getOutputResponse(@PathVariable Long inputId) {
+    @GetMapping("/{inputId}/list")
+    public ResponseEntity<SuccessResponse<List<OutputResponseDto>>> getOutputResponseByInput(@PathVariable Long inputId) {
         List<OutputResponseDto> response = outputService.getOutputResponseList(inputId);
         return SuccessResponse.of(SuccessCode.OK, response);
     }
