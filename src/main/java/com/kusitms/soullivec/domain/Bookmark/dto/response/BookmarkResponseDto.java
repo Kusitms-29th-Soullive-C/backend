@@ -35,10 +35,10 @@ public class BookmarkResponseDto {
         return BookmarkResponseDto.builder()
                 .bookmarkId(bookmark.getBookmarkId())
                 .userId(bookmark.getUser().getUserId())
-                .modelId(bookmark.getModel().getModelId())
-                .modelName(bookmark.getModel().getModelName())
-                .job(bookmark.getModel().getJob())
-                .mood(getMoodList(bookmark.getModel().getMood()))
+                .modelId(bookmark.getOutput().getModel().getModelId())
+                .modelName(bookmark.getOutput().getModel().getModelName())
+                .job(bookmark.getOutput().getModel().getJob())
+                .mood(getMoodList(bookmark.getOutput().getModel().getMood()))
                 .outputId(bookmark.getOutput().getOutputId())
                 .build();
     }
