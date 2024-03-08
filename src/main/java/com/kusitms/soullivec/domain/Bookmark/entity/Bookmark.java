@@ -22,10 +22,6 @@ public class Bookmark {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "model_id")
-    private Model model;
-
     @ManyToOne
     @JoinColumn(name = "output_id")
     private Output output;
