@@ -51,8 +51,8 @@ public class OutputService {
     }
 
     //output summary dto화
-    public OutputSummaryResponseDto createOutputSummaryDto(Long outputId) {
-        Output output = findOutputByInputId(outputId);
+    public OutputSummaryResponseDto getOutputSummaryDto(Long outputId) {
+        Output output = findOutputById(outputId);
         return OutputSummaryResponseDto.of(output);
     }
 
@@ -68,6 +68,7 @@ public class OutputService {
                 .orElseThrow(() -> new ApplicationException(ErrorCode.ENTITY_NOT_FOUND));
     }
 
+    //input과 model에 대한 적합도 검사 후 output list 반환
     private List<Output> findAllOutputByInputId(Long inputId) {
         return outputRepository.findAllOutputByInputId(inputId);
     }
