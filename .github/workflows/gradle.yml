@@ -71,7 +71,7 @@ jobs:
           host: ${{ secrets.AWS_HOST }}
           key: ${{ secrets.AWS_KEY }}
           port: 22
-          source: "./backend/docker-compose.yml"
+          source: "./docker-compose.yml"
           target: "/home/ubuntu/"
 
       - name: 🧁 docker hub에서 pull 후 deploy합니다.
