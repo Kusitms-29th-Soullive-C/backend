@@ -1,11 +1,8 @@
 version: '3'
 services:
   trothcam:
-    container_name: soullive
     image: emilywin825/soullive
-    expose:
-      - 8080
+    container_name: soullive
+    restart: always
     ports:
       - 8080:8080
-    environment:
-      - TZ=Asia/Seoul
