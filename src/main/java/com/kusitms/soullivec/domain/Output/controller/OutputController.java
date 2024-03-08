@@ -33,9 +33,16 @@ public class OutputController {
     }
 
     //output 요약 반환
-    @GetMapping("/{inputId}/summary")
-    public ResponseEntity<SuccessResponse<List<OutputSummaryResponseDto>>> getOutputSummaryResponse(@PathVariable Long inputId) {
+    @GetMapping("/summary-by-input/{inputId}")
+    public ResponseEntity<SuccessResponse<List<OutputSummaryResponseDto>>> getOutputSummaryResponseByInput(@PathVariable Long inputId) {
         List<OutputSummaryResponseDto> response = outputService.getOutputSummaryResponseList(inputId);
+        return SuccessResponse.of(SuccessCode.OK, response);
+    }
+
+    //output id로 output 요약 반환
+    @GetMapping("/summary-by-output/{outputId}")
+    public ResponseEntity<SuccessResponse<OutputSummaryResponseDto>> getOutputSummaryResponseByOutput(@PathVariable Long outputId) {
+        OutputSummaryResponseDto response = outputService.getOutputSummaryDto(outputId);
         return SuccessResponse.of(SuccessCode.OK, response);
     }
 

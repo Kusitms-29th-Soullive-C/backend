@@ -1,8 +1,11 @@
 package com.kusitms.soullivec.domain.Output.dto.response;
 
+import com.kusitms.soullivec.domain.Mood.entity.Mood;
 import com.kusitms.soullivec.domain.Output.entity.Output;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 @Builder
 @Getter
@@ -16,6 +19,8 @@ public class OutputResponseDto {
 
     private String job;
 
+    private List<String> mood;
+
     private int ranking;
 
     private int fitness;
@@ -28,12 +33,19 @@ public class OutputResponseDto {
 
     private String strategy;
 
+    private static List<String> getMoodList(List<Mood> moods) {
+        return moods.stream()
+                .map(Mood::getContent)
+                .toList();
+    }
+
     public static OutputResponseDto of(Output output) {
         return OutputResponseDto.builder()
                 .outputId(output.getOutputId())
                 .modelId(output.getModel().getModelId())
                 .modelName(output.getModel().getModelName())
                 .job(output.getModel().getJob())
+                .mood(getMoodList((output.getModel().getMood())))
                 .ranking(output.getRanking())
                 .fitness(output.getFitness())
                 .issue(output.getIssue())
