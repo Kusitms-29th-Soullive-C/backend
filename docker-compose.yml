@@ -1,0 +1,8 @@
+version: '3'
+services:
+  trothcam:
+    image: emilywin825/soullive
+    container_name: soullive
+    restart: always
+    ports:
+      - 8080:8080
