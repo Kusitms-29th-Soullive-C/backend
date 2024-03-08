@@ -37,7 +37,7 @@ public class Output {
     @Column(name = "input_id")
     private Long inputId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "model_id")
     private Model model;
 

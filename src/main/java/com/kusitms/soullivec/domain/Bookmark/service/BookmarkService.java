@@ -5,6 +5,8 @@ import com.kusitms.soullivec.common.error.ErrorCode;
 import com.kusitms.soullivec.domain.Bookmark.dto.response.BookmarkResponseDto;
 import com.kusitms.soullivec.domain.Bookmark.entity.Bookmark;
 import com.kusitms.soullivec.domain.Bookmark.repository.BookmarkRepository;
+import com.kusitms.soullivec.domain.User.entity.User;
+import com.kusitms.soullivec.domain.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class BookmarkService {
 
     private final BookmarkRepository bookmarkRepository;
+    private final UserService userService;
 
     //Bookmark List dto화
     public List<BookmarkResponseDto> getBookmarkResponseLIst(Long userId) {
@@ -35,7 +38,8 @@ public class BookmarkService {
 
     //user에 대한 bookmark List 반환
     private List<Bookmark> findAllBookmarkByUserId(Long userId) {
-        return bookmarkRepository.findAllByUserId(userId);
+        User user = userService.findUserById(userId);
+        return bookmarkRepository.findAllByUser(user);
     }
 
 }

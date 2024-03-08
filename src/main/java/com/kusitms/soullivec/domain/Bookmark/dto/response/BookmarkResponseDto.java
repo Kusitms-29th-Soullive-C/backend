@@ -1,10 +1,11 @@
 package com.kusitms.soullivec.domain.Bookmark.dto.response;
 
 import com.kusitms.soullivec.domain.Bookmark.entity.Bookmark;
-import com.kusitms.soullivec.domain.Output.entity.Output;
-import com.kusitms.soullivec.domain.User.entity.User;
+import com.kusitms.soullivec.domain.Mood.entity.Mood;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 @Builder
 @Getter
@@ -12,14 +13,32 @@ public class BookmarkResponseDto {
 
     private Long bookmarkId;
 
-    private User userId;
+    private Long userId;
+
+    private Long modelId;
+
+    private String modelName;
+
+    private String job;
+
+    private List<String> mood;
 
     private Long outputId;
+
+    private static List<String> getMoodList(List<Mood> moods) {
+        return moods.stream()
+                .map(Mood::getContent)
+                .toList();
+    }
 
     public static BookmarkResponseDto of(Bookmark bookmark) {
         return BookmarkResponseDto.builder()
                 .bookmarkId(bookmark.getBookmarkId())
-                .userId(bookmark.getUser())
+                .userId(bookmark.getUser().getUserId())
+                .modelId(bookmark.getModel().getModelId())
+                .modelName(bookmark.getModel().getModelName())
+                .job(bookmark.getModel().getJob())
+                .mood(getMoodList(bookmark.getModel().getMood()))
                 .outputId(bookmark.getOutput().getOutputId())
                 .build();
     }
