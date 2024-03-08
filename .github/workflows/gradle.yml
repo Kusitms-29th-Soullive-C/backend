@@ -1,11 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
-name: SoulliveC CI/CD
+name: Main Service CICD
 
 on:
   push:
@@ -13,83 +6,69 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      ## jdk setting
       - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: 🍀 JDK 17 설정
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      ## gradle caching
-      - name: 🧁 Gradle Caching
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: 🧁 application.yml 파일을 생성 합니다.
+      - name: 🍀 application.yml 설정
         run: |
-          cd ./src/main/resources
+          cd ./src/main
+          mkdir resources
+          cd ./resources
           touch ./application.yml
-          echo "${{ secrets.PROPERTIES }}" > ./application.yml # github actions에서 설정한 값을 application.yml 파일에 쓰기
-        shell: bash
+          echo "$APPLICATION_MAIN" > ./application.yml
+        env:
+          APPLICATION_MAIN: ${{ secrets.APPLICATION_MAIN }}
 
-      #Gradle을 사용하여 프로젝트를 빌드
-      - name: 🧁 gradle build를 위한 권한을 부여합니다.
-        run: chmod +x gradlew
-
-      - name: 🧁 gradle build 중입니다.
-        run: ./gradlew build
-        shell: bash # ci는 여기까지
-
-      ## Docker 이미지를 빌드하고 Docker Hub로 푸시
-      - name: 🧁 docker image build 후 docker hub에 push합니다.
+      - name: 🍀 gradle build를 위한 권한 설정
         run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}
+          chmod +x gradlew
+
+      - name: 🍀 gradle build
+        run: |
+          ./gradlew build -x test
+
+      - name: 🍀 docker image build 후 docker hub에 push
+        run: |
+          docker login -u ${{ secrets.MAIN_DOCKER_USERNAME }} -p ${{ secrets.MAIN_DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.MAIN_DOCKER_REPOSITORY }}/${{ secrets.MAIN_DOCKER_IMAGE }} .
+          docker push ${{ secrets.MAIN_DOCKER_REPOSITORY }}/${{ secrets.MAIN_DOCKER_IMAGE }}
+
       - name: 🍀 deploy.sh 파일을 EC2 development server로 전달
         uses: appleboy/scp-action@master
         with:
           username: ubuntu
-          host: ${{ secrets.AWS_HOST }}
-          key: ${{ secrets.AWS_KEY }}
-          port: 22
+          host: ${{ secrets.MAIN_EC2_HOST }}
+          key: ${{ secrets.MAIN_EC2_KEY }}
+          port: ${{ secrets.MAIN_EC2_PORT }}
           source: "./scripts/deploy.sh"
           target: "/home/ubuntu/"
+
       - name: 🍀 docker-compose.yml 파일을 EC2 development server로 전달
         uses: appleboy/scp-action@master
         with:
           username: ubuntu
-          host: ${{ secrets.AWS_HOST }}
-          key: ${{ secrets.AWS_KEY }}
-          port: 22
+          host: ${{ secrets.MAIN_EC2_HOST }}
+          key: ${{ secrets.MAIN_EC2_KEY }}
+          port: ${{ secrets.MAIN_EC2_PORT }}
           source: "./docker-compose.yml"
           target: "/home/ubuntu/"
 
-      - name: 🧁 docker hub에서 pull 후 deploy합니다.
+      - name:  docker hub 에서 pull 후 deploy
         uses: appleboy/ssh-action@master
         with:
           username: ubuntu
-          host: ${{ secrets.AWS_HOST }}
-          key: ${{ secrets.AWS_KEY }}
+          host: ${{ secrets.MAIN_EC2_HOST }}
+          key: ${{ secrets.MAIN_EC2_KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}
+            sudo docker pull ${{ secrets.MAIN_DOCKER_REPOSITORY }}/${{ secrets.MAIN_DOCKER_IMAGE }}
             chmod 777 ./scripts/deploy.sh
             cp ./scripts/deploy.sh ./deploy.sh
             ./deploy.sh
