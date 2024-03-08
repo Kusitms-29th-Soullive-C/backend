@@ -70,7 +70,7 @@ jobs:
           username: ubuntu
           host: ${{ secrets.AWS_HOST }}
           key: ${{ secrets.AWS_KEY }}
-          port: ${22}
+          port: 22
           source: "./backend/docker-compose.yml"
           target: "/home/ubuntu/"
 
