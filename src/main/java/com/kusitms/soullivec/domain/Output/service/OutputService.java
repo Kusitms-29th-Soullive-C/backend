@@ -57,7 +57,7 @@ public class OutputService {
     }
 
     //output 반환
-    private Output findOutputById(Long outputId) {
+    public Output findOutputById(Long outputId) {
         return outputRepository.findById(outputId)
                 .orElseThrow(() -> new ApplicationException(ErrorCode.ENTITY_NOT_FOUND));
     }

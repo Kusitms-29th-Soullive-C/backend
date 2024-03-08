@@ -1,6 +1,6 @@
 package com.kusitms.soullivec.domain.Bookmark.entity;
 
-import com.kusitms.soullivec.domain.Model.entity.Model;
+import com.kusitms.soullivec.domain.Bookmark.dto.request.CreateBookmarkRequestDto;
 import com.kusitms.soullivec.domain.Output.entity.Output;
 import com.kusitms.soullivec.domain.User.entity.User;
 import jakarta.persistence.*;
@@ -25,5 +25,12 @@ public class Bookmark {
     @ManyToOne
     @JoinColumn(name = "output_id")
     private Output output;
+
+    public static Bookmark createBookmark(User user, Output output, CreateBookmarkRequestDto bookmarkRequest) {
+        return Bookmark.builder()
+                .user(user)
+                .output(output)
+                .build();
+    }
 
 }
