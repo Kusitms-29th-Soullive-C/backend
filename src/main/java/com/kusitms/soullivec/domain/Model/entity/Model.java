@@ -1,5 +1,6 @@
 package com.kusitms.soullivec.domain.Model.entity;
 
+import com.kusitms.soullivec.domain.FileUpload.entity.Image;
 import com.kusitms.soullivec.domain.Input.entity.Input;
 import com.kusitms.soullivec.domain.Mood.entity.Mood;
 import jakarta.persistence.*;
@@ -29,6 +30,9 @@ public class Model {
     @ManyToOne
     @JoinColumn(name = "input_id")
     private Input input;
+
+    @OneToOne(mappedBy = "model")
+    private Image modelImage;
 
     @OneToMany(mappedBy = "model")
     private List<Mood> mood = new ArrayList<>();

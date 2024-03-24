@@ -20,6 +20,8 @@ public class OutputSummaryResponseDto {
 
     private String job;
 
+    private String modelImg;
+
     private List<String> mood;
 
     private static List<String> getMoodList(List<Mood> moods) {
@@ -28,12 +30,13 @@ public class OutputSummaryResponseDto {
                 .toList();
     }
 
-    public static OutputSummaryResponseDto of(Output output) {
+    public static OutputSummaryResponseDto of(Output output, String modelImg) {
         return OutputSummaryResponseDto.builder()
                 .outputId(output.getOutputId())
                 .modelId(output.getModel().getModelId())
                 .modelName(output.getModel().getModelName())
                 .job(output.getModel().getJob())
+                .modelImg(modelImg)
                 .mood(getMoodList((output.getModel().getMood())))
                 .build();
     }

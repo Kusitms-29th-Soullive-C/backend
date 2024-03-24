@@ -1,15 +1,19 @@
 package com.kusitms.soullivec.domain.Output.service;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.kusitms.soullivec.common.error.ApplicationException;
 import com.kusitms.soullivec.common.error.ErrorCode;
+import com.kusitms.soullivec.domain.FileUpload.entity.Image;
 import com.kusitms.soullivec.domain.Output.dto.response.OutputResponseDto;
 import com.kusitms.soullivec.domain.Output.dto.response.OutputSummaryResponseDto;
 import com.kusitms.soullivec.domain.Output.entity.Output;
 import com.kusitms.soullivec.domain.Output.repository.OutputRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +22,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class OutputService {
 
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucketName;
+    private final AmazonS3 amazonS3;
     private final OutputRepository outputRepository;
 
     //output dto List
@@ -25,7 +32,7 @@ public class OutputService {
         List<Output> outputList = findAllOutputByInputId(inputId);
 
         return outputList.stream()
-                .map(OutputResponseDto::of)
+                .map(output -> OutputResponseDto.of(output, getModelImgUrl(output)))
                 .collect(Collectors.toList());
     }
 
@@ -34,26 +41,26 @@ public class OutputService {
         List<Output> outputList = findAllOutputByInputId(inputId);
 
         return outputList.stream()
-                .map(OutputSummaryResponseDto::of)
+                .map(output -> OutputSummaryResponseDto.of(output, getModelImgUrl(output)))
                 .collect(Collectors.toList());
     }
 
     //output id에 대한 output dto화
     public OutputResponseDto getOutputResponseDto(Long outputId) {
         Output output = findOutputById(outputId);
-        return OutputResponseDto.of(output);
+        return OutputResponseDto.of(output, getModelImgUrl(output));
     }
 
     //input id에 대한 output dto화
     public OutputResponseDto createOutputResponseDto(Long inputId) {
         Output output = findOutputByInputId(inputId);
-        return OutputResponseDto.of(output);
+        return OutputResponseDto.of(output, getUrl(output.getModel().getModelImage()));
     }
 
     //output summary dto화
     public OutputSummaryResponseDto getOutputSummaryDto(Long outputId) {
         Output output = findOutputById(outputId);
-        return OutputSummaryResponseDto.of(output);
+        return OutputSummaryResponseDto.of(output, getModelImgUrl(output));
     }
 
     //output 반환
@@ -73,4 +80,12 @@ public class OutputService {
         return outputRepository.findAllOutputByInputId(inputId);
     }
 
+    private String getUrl(Image image) {
+        URL url = amazonS3.getUrl(bucketName, image.getImageUrl());
+        return "" + url;
+    }
+
+    public String getModelImgUrl(Output output) {
+        return getUrl(output.getModel().getModelImage());
+    }
 }

@@ -31,7 +31,7 @@ public class BookmarkService {
     public List<BookmarkResponseDto> getBookmarkResponseLIst(Long userId) {
         List<Bookmark> bookmarkList = findAllBookmarkByUserId(userId);
         return bookmarkList.stream()
-                .map(BookmarkResponseDto::of)
+                .map(bookmark -> BookmarkResponseDto.of(bookmark, outputService.getModelImgUrl(bookmark.getOutput())))
                 .collect(Collectors.toList());
     }
 

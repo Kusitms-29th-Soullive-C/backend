@@ -21,6 +21,8 @@ public class BookmarkResponseDto {
 
     private String job;
 
+    private String modelImg;
+
     private List<String> mood;
 
     private Long outputId;
@@ -31,13 +33,14 @@ public class BookmarkResponseDto {
                 .toList();
     }
 
-    public static BookmarkResponseDto of(Bookmark bookmark) {
+    public static BookmarkResponseDto of(Bookmark bookmark, String modelImg) {
         return BookmarkResponseDto.builder()
                 .bookmarkId(bookmark.getBookmarkId())
                 .userId(bookmark.getUser().getUserId())
                 .modelId(bookmark.getOutput().getModel().getModelId())
                 .modelName(bookmark.getOutput().getModel().getModelName())
                 .job(bookmark.getOutput().getModel().getJob())
+                .modelImg(modelImg)
                 .mood(getMoodList(bookmark.getOutput().getModel().getMood()))
                 .outputId(bookmark.getOutput().getOutputId())
                 .build();

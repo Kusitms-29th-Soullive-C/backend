@@ -19,6 +19,8 @@ public class OutputResponseDto {
 
     private String job;
 
+    private String modelImg;
+
     private List<String> mood;
 
     private int ranking;
@@ -39,12 +41,13 @@ public class OutputResponseDto {
                 .toList();
     }
 
-    public static OutputResponseDto of(Output output) {
+    public static OutputResponseDto of(Output output, String modelImg) {
         return OutputResponseDto.builder()
                 .outputId(output.getOutputId())
                 .modelId(output.getModel().getModelId())
                 .modelName(output.getModel().getModelName())
                 .job(output.getModel().getJob())
+                .modelImg(modelImg)
                 .mood(getMoodList((output.getModel().getMood())))
                 .ranking(output.getRanking())
                 .fitness(output.getFitness())
